@@ -18,13 +18,16 @@ class Details extends StatelessWidget {
             height: 95,
             width: 150,
           ),
-          leading: IconButton(onPressed: (){}, icon: Icon(Icons.menu, color: Colors.white)),
           actions: [
-            IconButton(onPressed: (){
-              showSearch(context: context, delegate: CustomSearchDelegate());
-            }, icon: Icon(Icons.search, color: Colors.white)),
+            IconButton(
+                onPressed: () {
+                  showSearch(
+                      context: context, delegate: CustomSearchDelegate());
+                },
+                icon: Icon(Icons.search, color: Colors.white)),
           ],
         ),
+        drawer: Drawer(),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -72,91 +75,153 @@ class Details extends StatelessWidget {
                 child: ListView(
                   padding: const EdgeInsets.all(8),
                   children: <Widget>[
-                    Card(
-                      elevation: 10,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-                            child: Text("Crying", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Roboto'),),
-                          ),
-                          Divider(),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
-                            child: Text("Lorem Ipsum is simply dummy text of the printing and typesetting  survived not only five centuries",style: TextStyle(fontSize: 16, fontFamily: 'Roboto') ),
-                          ),
-                        ],
+                    ListTile(
+                      title: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+                        child: Text(
+                          "Crying",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              fontFamily: 'Roboto'),
+                        ),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
+                        child: Text(
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting  survived not only five centuries",
+                            style: TextStyle(
+                                fontSize: 16, fontFamily: 'Roboto')),
                       ),
                     ),
-                    Card(
-                      elevation: 10,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-                            child: Text("Crying", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Roboto'),),
-                          ),
-                          Divider(),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
-                            child: Text("Lorem Ipsum is simply dummy text of the printing and typesetting  survived not only five centuries",style: TextStyle(fontSize: 16, fontFamily: 'Roboto') ),
-                          ),
-                        ],
+                    Divider(),
+                    ListTile(
+                      title: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+                        child: Text(
+                          "Crying",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              fontFamily: 'Roboto'),
+                        ),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
+                        child: Text(
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting  survived not only five centuries",
+                            style: TextStyle(
+                                fontSize: 16, fontFamily: 'Roboto')),
                       ),
                     ),
-                    Card(
-                      elevation: 10,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-                            child: Text("Crying", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Roboto'),),
-                          ),
-                          Divider(),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
-                            child: Text("Lorem Ipsum is simply dummy text of the printing and typesetting  survived not only five centuries",style: TextStyle(fontSize: 16, fontFamily: 'Roboto') ),
-                          ),
-                        ],
+                    Divider(),
+                    ListTile(
+                      title: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+                        child: Text(
+                          "Crying",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              fontFamily: 'Roboto'),
+                        ),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
+                        child: Text(
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting  survived not only five centuries",
+                            style: TextStyle(
+                                fontSize: 16, fontFamily: 'Roboto')),
                       ),
                     ),
-                    Card(
-                      elevation: 10,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-                            child: Text("Crying", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Roboto'),),
-                          ),
-                          Divider(),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
-                            child: Text("Lorem Ipsum is simply dummy text of the printing and typesetting  survived not only five centuries",style: TextStyle(fontSize: 16, fontFamily: 'Roboto') ),
-                          ),
-                        ],
+                    Divider(),
+                    ListTile(
+                      title: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+                        child: Text(
+                          "Crying",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              fontFamily: 'Roboto'),
+                        ),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
+                        child: Text(
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting  survived not only five centuries",
+                            style: TextStyle(
+                                fontSize: 16, fontFamily: 'Roboto')),
                       ),
                     ),
-                    Card(
-                      elevation: 10,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-                            child: Text("Crying", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: 'Roboto'),),
-                          ),
-                          Divider(),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
-                            child: Text("Lorem Ipsum is simply dummy text of the printing and typesetting  survived not only five centuries",style: TextStyle(fontSize: 16, fontFamily: 'Roboto') ),
-                          ),
-                        ],
+                    Divider(),
+                    ListTile(
+                      title: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+                        child: Text(
+                          "Crying",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              fontFamily: 'Roboto'),
+                        ),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
+                        child: Text(
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting  survived not only five centuries",
+                            style: TextStyle(
+                                fontSize: 16, fontFamily: 'Roboto')),
                       ),
                     ),
+                    Divider(),
+                    ListTile(
+                      title: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+                        child: Text(
+                          "Crying",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              fontFamily: 'Roboto'),
+                        ),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
+                        child: Text(
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting  survived not only five centuries",
+                            style: TextStyle(
+                                fontSize: 16, fontFamily: 'Roboto')),
+                      ),
+                    ),
+                    Divider(),
+                    ListTile(
+                      title: Padding(
+                        padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+                        child: Text(
+                          "Crying",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              fontFamily: 'Roboto'),
+                        ),
+                      ),
+                      subtitle: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
+                        child: Text(
+                            "Lorem Ipsum is simply dummy text of the printing and typesetting  survived not only five centuries",
+                            style: TextStyle(
+                                fontSize: 16, fontFamily: 'Roboto')),
+                      ),
+                    ),
+                    Divider(),
                   ],
                 ),
               ),
@@ -167,6 +232,3 @@ class Details extends StatelessWidget {
     );
   }
 }
-
-
-

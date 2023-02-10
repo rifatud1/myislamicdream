@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:myislamicdream/modules/details/details.dart';
+import 'package:myislamicdream/modules/home/home.dart';
 import 'package:myislamicdream/splash_screen.dart';
 
 void main() async{
