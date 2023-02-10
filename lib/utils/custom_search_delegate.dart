@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:myislamicdream/modules/details/details_controller.dart';
 import 'package:get/get.dart';
+
+import '../models/details/search_result_model.dart';
 
 class CustomSearchDelegate extends SearchDelegate{
   DetailsController _detailsController = Get.put(DetailsController());
 
   List<dynamic> searchTerms = [];
+  List<dynamic> resultTerms = [];
+
   @override
   List<Widget>? buildActions(BuildContext context) {
     // TODO: implement buildActions
@@ -30,31 +36,48 @@ class CustomSearchDelegate extends SearchDelegate{
   @override
   Widget buildResults(BuildContext context) {
     List<String> matchQuery = [];
+    print("getResult run before");
+    _detailsController.getResult(query).then((val){
+      _detailsController.resultList.value = searchResultModelFromJson(jsonEncode(val));
+      print("getResult run done");
+    });
+    //resultTerms = _detailsController.resultList.value;
+    print(resultTerms);
+    print("done it");
+
     for(var fruit in searchTerms){
       if(fruit.toLowerCase().contains(query.toLowerCase())){
         matchQuery.add(fruit);
       }
     }
-    return ListView.builder(itemCount: matchQuery.length, itemBuilder: (context, index){
+    return ListView.builder(itemCount: _detailsController.resultList.value!.results.length, itemBuilder: (context, index){
       var result = matchQuery[index];
+
       return ListTile(
         title: Padding(
           padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-          child: Text(
-            result,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-                fontFamily: 'Roboto'),
+          child: Obx( () {
+              return Text(
+                _detailsController.resultList.value!.results![index].title,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    fontFamily: 'Roboto'),
+              );
+            }
           ),
         ),
         subtitle: Padding(
           padding: const EdgeInsets.only(
               top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
-          child: Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting  survived not only five centuries",
-              style: TextStyle(
-                  fontSize: 16, fontFamily: 'Roboto')),
+          child: Obx(() {
+              return Text(
+                _detailsController.resultList.value!.results![index].meaning,
+                  //"lorem ipsum thiis is the future and this the the past",
+                  style: TextStyle(
+                      fontSize: 16, fontFamily: 'Roboto'));
+            }
+          ),
         ),
       );
     });
@@ -63,6 +86,7 @@ class CustomSearchDelegate extends SearchDelegate{
   @override
   Widget buildSuggestions(BuildContext context) {
     List<String> matchQuery = [];
+
 
     _detailsController.getSuggest(query).then((val){
       _detailsController.suggestList.value = val;
@@ -80,7 +104,7 @@ class CustomSearchDelegate extends SearchDelegate{
         title: Text(suggestion),
         onTap: (){
           query = suggestion;
-          showResults(context); 
+          showResults(context);
         },
 
       );
