@@ -6,109 +6,138 @@ import 'package:get/get.dart';
 
 import '../models/details/search_result_model.dart';
 
-class CustomSearchDelegate extends SearchDelegate{
+class CustomSearchDelegate extends SearchDelegate {
+  @override
+  // TODO: implement searchFieldLabel
+  String? get searchFieldLabel => "Describe your dream";
   DetailsController _detailsController = Get.put(DetailsController());
 
-  List<dynamic> searchTerms = [];
-  List<dynamic> resultTerms = [];
+  final searchTerms = [].obs;
+  final resultTerms = [].obs;
 
   @override
   List<Widget>? buildActions(BuildContext context) {
     // TODO: implement buildActions
     return [
-      IconButton(onPressed: (){
-        if(query.isEmpty){
-          close(context, null);
-        }else{
-          query = '';
-        }
-      }, icon: Icon(Icons.clear)),
+      IconButton(
+          onPressed: () {
+            if (query.isEmpty) {
+              close(context, null);
+            } else {
+              query = '';
+            }
+          },
+          icon: Icon(Icons.clear)),
     ];
   }
 
   @override
   Widget? buildLeading(BuildContext context) {
-    return IconButton(onPressed: (){
-      close(context, null);
-    }, icon: Icon(Icons.arrow_back));
+    return IconButton(
+        onPressed: () {
+          close(context, null);
+        },
+        icon: Icon(Icons.arrow_back));
+  }
+  callBack () async{
+    await _detailsController.getResult(query, _detailsController.page).then((val) {
+      _detailsController.resultList.value =
+          searchResultModelFromJson(jsonEncode(val));
+    });
+    resultTerms.value = _detailsController.resultList.value!.results;
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    List<String> matchQuery = [];
-    print("getResult run before");
-    _detailsController.getResult(query).then((val){
-      _detailsController.resultList.value = searchResultModelFromJson(jsonEncode(val));
-      print("getResult run done");
-    });
-    //resultTerms = _detailsController.resultList.value;
-    print(resultTerms);
-    print("done it");
+    List<Result> matchQuery = [];
+    callBack();
 
-    for(var fruit in searchTerms){
-      if(fruit.toLowerCase().contains(query.toLowerCase())){
+
+    //
+    // void scrollListener(){
+    //   _detailsController.scroll.addListener(() async{
+    //     if(_detailsController.scroll.position.maxScrollExtent == _detailsController.scroll.position.pixels){
+    //       _detailsController.page.value = _detailsController.page.value+1;
+    //       await _detailsController.getResult(query,_detailsController.page.value);
+    //     }
+    //
+    //   });
+    // }
+
+    for (var fruit in _detailsController.resultList.value!.results) {
+      if (fruit.title.toLowerCase().contains(query.toLowerCase())) {
         matchQuery.add(fruit);
-      }
-    }
-    return ListView.builder(itemCount: _detailsController.resultList.value!.results.length, itemBuilder: (context, index){
-      var result = matchQuery[index];
 
-      return ListTile(
-        title: Padding(
-          padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-          child: Obx( () {
-              return Text(
-                _detailsController.resultList.value!.results![index].title,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    fontFamily: 'Roboto'),
-              );
-            }
-          ),
-        ),
-        subtitle: Padding(
-          padding: const EdgeInsets.only(
-              top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
-          child: Obx(() {
-              return Text(
-                _detailsController.resultList.value!.results![index].meaning,
-                  //"lorem ipsum thiis is the future and this the the past",
+      }
+      print(matchQuery);
+    }
+    //scrollListener();
+
+    //if (query.isNotEmpty && matchQuery.contains(query.toLowerCase())) {
+      return ListView.builder(
+          controller: _detailsController.scroll,
+          itemCount: matchQuery.length,
+          itemBuilder: (context, index) {
+            var result = matchQuery[index];
+            print("This is result term $resultTerms");
+            return ListTile(
+              title: Padding(
+                padding: const EdgeInsets.only(top: 8.0, left: 8.0),
+                child: Text(
+                  result.title,
                   style: TextStyle(
-                      fontSize: 16, fontFamily: 'Roboto'));
-            }
-          ),
-        ),
-      );
-    });
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      fontFamily: 'Roboto'),
+                ),
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(
+                    top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
+                child: Text(
+                    result.meaning,
+                    //"lorem ipsum thiis is the future and this the the past",
+                    style: TextStyle(fontSize: 16, fontFamily: 'Roboto')),
+              ),
+            );
+          });
+    //}
+    // else if (query == "") {
+    //   return Text("");
+    // }
+    // return ListTile(
+    //   title: Text("No Data Found"),
+    // );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    List<String> matchQuery = [];
+    final matchQuery = [].obs;
 
-
-    _detailsController.getSuggest(query).then((val){
+    _detailsController.getSuggest(query).then((val) {
       _detailsController.suggestList.value = val;
     });
-    searchTerms = _detailsController.suggestList.value;
+    searchTerms.value = _detailsController.suggestList.value;
 
-    for(var fruit in searchTerms){
-      if(fruit.toLowerCase().contains(query.toLowerCase())){
+    for (var fruit in searchTerms.value) {
+      if (fruit.toLowerCase().contains(query.toLowerCase())) {
         matchQuery.add(fruit);
       }
     }
-    return ListView.builder(itemCount: matchQuery.length, itemBuilder: (context, index){
-      var suggestion = matchQuery[index];
-      return ListTile(
-        title: Text(suggestion),
-        onTap: (){
-          query = suggestion;
-          showResults(context);
-        },
-
-      );
-    });
+    return Obx(() {
+        return ListView.builder(
+            itemCount: matchQuery.length,
+            itemBuilder: (context, index) {
+              var suggestion = matchQuery[index];
+              return ListTile(
+                title: Text(suggestion),
+                onTap: () {
+                  query = suggestion;
+                  showResults(context);
+                },
+              );
+            });
+      }
+    );
   }
-  
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
@@ -7,6 +8,8 @@ import '../../models/details/search_result_model.dart';
 class DetailsController extends GetxController {
   var suggestList = [].obs;
   var resultList = Rxn<SearchResultModel>();
+  var page = 1.obs;
+  ScrollController scroll = ScrollController();
   @override
   void onInit() {
     // TODO: implement onInit
@@ -39,8 +42,9 @@ class DetailsController extends GetxController {
 
   }
 
-  Future<dynamic> getResult(query) async{
-    var response = await http.get(Uri.parse('https://www.myislamicdream.com/api/get-search-result.php?txtSearch=$query'));
+  Future<dynamic> getResult(query, page) async{
+    print('Page Number is $page');
+    var response = await http.get(Uri.parse('https://www.myislamicdream.com/api/get-search-result.php?txtSearch=$query&cmdSearch=Search&page=$page'));
     if(response.statusCode == 200 && response.statusCode != null){
       print("reponse successful");
       print(response.body);
