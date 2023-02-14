@@ -144,6 +144,7 @@ class CustomSearchDelegate extends SearchDelegate {
                 title: Text(suggestion),
                 onTap: () async{
                   query = suggestion;
+                  matchQuery.clear();
                   await _detailsController.getResult(query, _detailsController.page).then((val) {
                     _detailsController.resultList.value =
                         searchResultModelFromJson(jsonEncode(val));
