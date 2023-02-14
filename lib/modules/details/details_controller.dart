@@ -45,7 +45,7 @@ class DetailsController extends GetxController {
   Future<dynamic> getResult(query, page) async{
     print('Page Number is $page');
     var response = await http.get(Uri.parse('https://www.myislamicdream.com/api/get-search-result.php?txtSearch=$query&cmdSearch=Search&page=$page'));
-    if(response.statusCode == 200 && response.statusCode != null){
+    if(response.statusCode == 200){
       print("reponse successful");
       print(response.body);
       var jsonString  = response.body;

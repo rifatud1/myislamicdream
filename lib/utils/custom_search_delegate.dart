@@ -10,10 +10,10 @@ class CustomSearchDelegate extends SearchDelegate {
   @override
   // TODO: implement searchFieldLabel
   String? get searchFieldLabel => "Describe your dream";
-  DetailsController _detailsController = Get.put(DetailsController());
+  final DetailsController _detailsController = Get.put(DetailsController());
 
   final searchTerms = [].obs;
-  final resultTerms = [].obs;
+  // final resultTerms = [].obs;
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -39,18 +39,35 @@ class CustomSearchDelegate extends SearchDelegate {
         },
         icon: Icon(Icons.arrow_back));
   }
-  callBack () async{
-    await _detailsController.getResult(query, _detailsController.page).then((val) {
-      _detailsController.resultList.value =
-          searchResultModelFromJson(jsonEncode(val));
-    });
-    resultTerms.value = _detailsController.resultList.value!.results;
-  }
+
+  final matchQuery = [].obs;
+  // callBack () async{
+  //
+  //   await _detailsController.getResult(query, _detailsController.page).then((val) {
+  //     _detailsController.resultList.value =
+  //         searchResultModelFromJson(jsonEncode(val));
+  //   });
+  //   // resultTerms.value = _detailsController.resultList.value!.results;
+  //   if(_detailsController.resultList.value == null){
+  //     return const Center(child: CircularProgressIndicator());
+  //   }else{
+  //     for (var i in _detailsController.resultList.value!.results) {
+  //       if (i.title.toLowerCase().contains(query.toLowerCase())) {
+  //
+  //         matchQuery.add(i);
+  //
+  //       }
+  //
+  //     }
+  //
+  //   }
+  //   print('match query: ${matchQuery[0].title}');
+  // }
 
   @override
   Widget buildResults(BuildContext context) {
-    List<Result> matchQuery = [];
-    callBack();
+
+
 
 
     //
@@ -64,40 +81,34 @@ class CustomSearchDelegate extends SearchDelegate {
     //   });
     // }
 
-    for (var fruit in _detailsController.resultList.value!.results) {
-      if (fruit.title.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
 
-      }
-      print(matchQuery);
-    }
     //scrollListener();
 
     //if (query.isNotEmpty && matchQuery.contains(query.toLowerCase())) {
       return ListView.builder(
-          controller: _detailsController.scroll,
+          // controller: _detailsController.scroll,
           itemCount: matchQuery.length,
           itemBuilder: (context, index) {
-            var result = matchQuery[index];
-            print("This is result term $resultTerms");
+            // var result = matchQuery[index];
+            // print("This is result term $resultTerms");
             return ListTile(
               title: Padding(
                 padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-                child: Text(
-                  result.title,
+                child: Obx(()=>Text(
+                  matchQuery[index].title,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                       fontFamily: 'Roboto'),
-                ),
+                )),
               ),
               subtitle: Padding(
                 padding: const EdgeInsets.only(
                     top: 8.0, left: 8.0, bottom: 8.0, right: 8.0),
-                child: Text(
-                    result.meaning,
+                child: Obx(()=>Text(
+                    matchQuery[index].meaning,
                     //"lorem ipsum thiis is the future and this the the past",
-                    style: TextStyle(fontSize: 16, fontFamily: 'Roboto')),
+                    style: TextStyle(fontSize: 16, fontFamily: 'Roboto'))),
               ),
             );
           });
@@ -112,28 +123,43 @@ class CustomSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final matchQuery = [].obs;
+    final _matchQuery = [].obs;
 
     _detailsController.getSuggest(query).then((val) {
       _detailsController.suggestList.value = val;
     });
     searchTerms.value = _detailsController.suggestList.value;
 
-    for (var fruit in searchTerms.value) {
+    for (var fruit in searchTerms) {
       if (fruit.toLowerCase().contains(query.toLowerCase())) {
-        matchQuery.add(fruit);
+        _matchQuery.add(fruit);
       }
     }
     return Obx(() {
         return ListView.builder(
-            itemCount: matchQuery.length,
+            itemCount: _matchQuery.length,
             itemBuilder: (context, index) {
-              var suggestion = matchQuery[index];
+              var suggestion = _matchQuery[index];
               return ListTile(
                 title: Text(suggestion),
-                onTap: () {
+                onTap: () async{
                   query = suggestion;
+                  await _detailsController.getResult(query, _detailsController.page).then((val) {
+                    _detailsController.resultList.value =
+                        searchResultModelFromJson(jsonEncode(val));
+                  });
+                  // resultTerms.value = _detailsController.resultList.value!.results;
+                  for (var i in _detailsController.resultList.value!.results) {
+                    if (i.title.toLowerCase().contains(query.toLowerCase())) {
+
+                      matchQuery.add(i);
+
+                    }
+
+                  }
+                  print('match query: ${matchQuery[0].title}');
                   showResults(context);
+                  // buildResults(context);
                 },
               );
             });
