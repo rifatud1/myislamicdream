@@ -1,16 +1,14 @@
-# myislamicdream
+## My Islamic Dream
 
-A new Flutter project.
+# Screenshots
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+![Screenshot 2023-02-16 at 7 41 53 PM](https://user-images.githubusercontent.com/66960677/219434987-f348729b-c5b4-4c08-88e3-882e0f9a5b5b.png) 
+![Screenshot 2023-02-16 at 7 42 01 PM](https://user-images.githubusercontent.com/66960677/219435038-4c319db1-1a73-457f-ae1c-e80705f8feea.png)
+![Screenshot 2023-02-16 at 7 42 13 PM](https://user-images.githubusercontent.com/66960677/219435088-c3e42eae-7eeb-4894-9aaa-b3029f886117.png)
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Screenshot 2023-02-16 at 7 42 39 PM](https://user-images.githubusercontent.com/66960677/219435535-52a3c483-6523-4fbc-bddc-bbf390170ece.png)
+![Screenshot 2023-02-16 at 7 47 42 PM](https://user-images.githubusercontent.com/66960677/219435563-d36dc6a4-ff60-4450-93f8-d2209fb55cf2.png)
+![Screenshot 2023-02-16 at 7 49 15 PM](https://user-images.githubusercontent.com/66960677/219435604-3d97e0e8-a116-45a8-8a9d-fff0146ddb42.png)
+![Screenshot 2023-02-16 at 7 49 29 PM](https://user-images.githubusercontent.com/66960677/219435632-d770af33-e4f7-4d5b-adf3-603ce743fd7a.png)
